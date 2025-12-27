@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ovulation & Period Tracker | Accurate Fertility Calculator</title>
+    <style>
+        :root { --pink: #ff6b81; --light-pink: #f8ecee; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fff5f6; padding: 20px; color: #444; }
+        .container { max-width: 450px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(255,107,129,0.1); }
+        h1 { text-align: center; color: var(--pink); font-size: 22px; margin-bottom: 25px; }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+        input { width: 100%; padding: 12px; border: 2px solid var(--light-pink); border-radius: 10px; box-sizing: border-box; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--pink); }
+        button { width: 100%; padding: 14px; background-color: var(--pink); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(255,107,129,0.3); }
+        button:hover { background-color: #ff4757; transform: translateY(-1px); }
+        #result { margin-top: 25px; display: none; animation: fadeIn 0.5s; }
+        .res-item { padding: 15px; border-radius: 10px; margin-bottom: 10px; font-size: 15px; }
+        .period { background-color: #ffeef0; border-left: 5px solid #ff6b81; }
+        .ovulation { background-color: #e3f9e5; border-left: 5px solid #2ecc71; }
+        .fertile { background-color: #fff9db; border-left: 5px solid #f1c40f; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Fertility Calculator</h1>
+    
+    <div class="input-group">
+        <label>First day of last period:</label>
+        <input type="date" id="lastPeriod">
+    </div>
+
+    <div class="input-group">
+        <label>Average length of cycle (22-45 days):</label>
+        <input type="number" id="cycleLength" value="28" min="22" max="45">
+    </div>
+
+    <button onclick="calculateFertility()">Calculate My Dates</button>
+
+    <div id="result">
+        <div class="res-item period">
+            <strong>Next Period Starts:</strong> <br><span id="nextPeriod"></span>
+        </div>
+        <div class="res-item ovulation">
+            <strong>Predicted Ovulation Day:</strong> <br><span id="ovulationDay"></span>
+        </div>
+        <div class="res-item fertile">
+            <strong>Most Fertile Window:</strong> <br><span id="fertileWindow"></span>
+        </div>
+    </div>
+</div>
+
+<script>
+function calculateFertility() {
+    const lastDateInput = document.getElementById('lastPeriod').value;
+    const cycleLength = parseInt(document.getElementById('cycleLength').value);
+
+    if (!lastDateInput) { alert("Please select a date"); return; }
+
+    const lastDate = new Date(lastDateInput);
+    
+    // 1. Next Period
+    const nextPeriodDate = new Date(lastDate);
+    nextPeriodDate.setDate(lastDate.getDate() + cycleLength);
+    
+    // 2. Ovulation (typically 14 days before next period)
+    const ovulationDate = new Date(nextPeriodDate);
+    ovulationDate.setDate(nextPeriodDate.getDate() - 14);
+    
+    // 3. Fertile Window (5 days before ovulation + ovulation day)
+    const windowStart = new Date(ovulationDate);
+    windowStart.setDate(ovulationDate.getDate() - 5);
+    const windowEnd = new Date(ovulationDate);
+    windowEnd.setDate(ovulationDate.getDate() + 1);
+
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('nextPeriod').innerText = nextPeriodDate.toLocaleDateString('en-US', options);
+    document.getElementById('ovulationDay').innerText = ovulationDate.toLocaleDateString('en-US', options);
+    document.getElementById('fertileWindow').innerText = 
+        windowStart.toLocaleDateString('en-US', options) + " to " + windowEnd.toLocaleDateString('en-US', options);
+
+    document.getElementById('result').style.display = 'block';
+}
+</script>
+</body>
+</html>
