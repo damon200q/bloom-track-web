@@ -281,22 +281,22 @@ export default function Home() {
                       <div className="bg-gradient-to-br from-red-50 to-pink-50 border-l-4 border-red-400 rounded-xl p-5 flex items-start">
                         <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0"><CalendarIcon className="w-6 h-6 text-red-500" /></div>
                         <div className="ml-4">
-                          <h3 class="text-sm font-bold text-gray-700 mb-1">Next Period Expected</h3>
-                          <p class="text-lg font-semibold text-gray-900">{format(fertilityResult.nextPeriod, "PPP")}</p>
+                          <h3 className="text-sm font-bold text-gray-700 mb-1">Next Period Expected</h3>
+                          <p className="text-lg font-semibold text-gray-900">{format(fertilityResult.nextPeriod, "PPP")}</p>
                         </div>
                       </div>
                       <div className="bg-gradient-to-br from-emerald-50 to-green-50 border-l-4 border-emerald-400 rounded-xl p-5 flex items-start">
                         <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0"><Sparkles className="w-6 h-6 text-emerald-500" /></div>
                         <div className="ml-4">
-                          <h3 class="text-sm font-bold text-gray-700 mb-1">⭐ Best Conception Day (Peak Ovulation)</h3>
-                          <p class="text-lg font-semibold text-gray-900">{format(fertilityResult.ovulationDay, "PPP")}</p>
+                          <h3 className="text-sm font-bold text-gray-700 mb-1">⭐ Best Conception Day (Peak Ovulation)</h3>
+                          <p className="text-lg font-semibold text-gray-900">{format(fertilityResult.ovulationDay, "PPP")}</p>
                         </div>
                       </div>
                       <div className="bg-gradient-to-br from-amber-50 to-yellow-50 border-l-4 border-amber-400 rounded-xl p-5 flex items-start">
                         <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0"><Activity className="w-6 h-6 text-amber-500" /></div>
                         <div className="ml-4">
-                          <h3 class="text-sm font-bold text-gray-700 mb-1">Fertile Window</h3>
-                          <p class="text-lg font-semibold text-gray-900">{format(fertilityResult.fertileWindowStart, "MMM d")} - {format(fertilityResult.fertileWindowEnd, "MMM d, yyyy")}</p>
+                          <h3 className="text-sm font-bold text-gray-700 mb-1">Fertile Window</h3>
+                          <p className="text-lg font-semibold text-gray-900">{format(fertilityResult.fertileWindowStart, "MMM d")} - {format(fertilityResult.fertileWindowEnd, "MMM d, yyyy")}</p>
                         </div>
                       </div>
                     </motion.div>
