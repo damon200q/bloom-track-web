@@ -32,6 +32,57 @@ export async function registerRoutes(
     res.status(204).send();
   });
 
+  // Pregnancy
+  app.get(api.pregnancy.list.path, async (_req, res) => {
+    const data = await storage.getPregnancies();
+    res.json(data);
+  });
+
+  app.post(api.pregnancy.create.path, async (req, res) => {
+    try {
+      const input = api.pregnancy.create.input.parse(req.body);
+      const data = await storage.createPregnancy(input);
+      res.status(201).json(data);
+    } catch (err) {
+      if (err instanceof z.ZodError) return res.status(400).json({ message: err.errors[0].message });
+      throw err;
+    }
+  });
+
+  // Weight
+  app.get(api.weight.list.path, async (_req, res) => {
+    const data = await storage.getWeights();
+    res.json(data);
+  });
+
+  app.post(api.weight.create.path, async (req, res) => {
+    try {
+      const input = api.weight.create.input.parse(req.body);
+      const data = await storage.createWeight(input);
+      res.status(201).json(data);
+    } catch (err) {
+      if (err instanceof z.ZodError) return res.status(400).json({ message: err.errors[0].message });
+      throw err;
+    }
+  });
+
+  // Postpartum
+  app.get(api.postpartum.list.path, async (_req, res) => {
+    const data = await storage.getPostpartumChecks();
+    res.json(data);
+  });
+
+  app.post(api.postpartum.create.path, async (req, res) => {
+    try {
+      const input = api.postpartum.create.input.parse(req.body);
+      const data = await storage.createPostpartum(input);
+      res.status(201).json(data);
+    } catch (err) {
+      if (err instanceof z.ZodError) return res.status(400).json({ message: err.errors[0].message });
+      throw err;
+    }
+  });
+
   // Simple seed
   const existing = await storage.getCycles();
   if (existing.length === 0) {

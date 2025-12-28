@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Women's Health Tracker | Fertility & Pregnancy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ff6b9d',
+                        secondary: '#ffd6e7',
+                        accent: '#ff8fab',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100 min-h-screen py-8 px-4">
+    
+    <div class="max-w-4xl mx-auto">
+        <!-- Header with BloomTrack Branding -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center mb-6">
+                <svg class="w-10 h-10 text-pink-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                <h1 class="text-5xl font-bold">
+                    <span class="text-gray-900">Bloom</span><span class="text-pink-500">Track</span>
+                </h1>
+            </div>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Understand your body's natural rhythm with our beautiful, simple fertility calculator.
+            </p>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-2 mb-8 flex flex-wrap gap-2">
+            <button onclick="showTab('fertility')" id="tab-fertility" class="tab-btn flex-1 min-w-[140px] px-5 py-4 rounded-2xl font-semibold transition-all duration-300 bg-gradient-to-r from-pink-400 to-rose-400 text-white shadow-lg transform scale-105">
+                <div class="flex flex-col items-center">
+                    <span class="text-2xl mb-1">🌸</span>
+                    <span class="text-sm">Fertility Tracker</span>
+                </div>
+            </button>
+            <button onclick="showTab('pregnancy')" id="tab-pregnancy" class="tab-btn flex-1 min-w-[140px] px-5 py-4 rounded-2xl font-semibold transition-all duration-300 text-gray-600 hover:bg-pink-50 hover:shadow-md">
+                <div class="flex flex-col items-center">
+                    <span class="text-2xl mb-1">🤰</span>
+                    <span class="text-sm">Due Date</span>
+                </div>
+            </button>
+            <button onclick="showTab('weight')" id="tab-weight" class="tab-btn flex-1 min-w-[140px] px-5 py-4 rounded-2xl font-semibold transition-all duration-300 text-gray-600 hover:bg-pink-50 hover:shadow-md">
+                <div class="flex flex-col items-center">
+                    <span class="text-2xl mb-1">📊</span>
+                    <span class="text-sm">Weight Tracker</span>
+                </div>
+            </button>
+            <button onclick="showTab('postpartum')" id="tab-postpartum" class="tab-btn flex-1 min-w-[140px] px-5 py-4 rounded-2xl font-semibold transition-all duration-300 text-gray-600 hover:bg-pink-50 hover:shadow-md">
+                <div class="flex flex-col items-center">
+                    <span class="text-2xl mb-1">💪</span>
+                    <span class="text-sm">Postpartum</span>
+                </div>
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-pink-100">
+            
+            <!-- FERTILITY TRACKER TAB -->
+            <div id="content-fertility" class="tab-content p-8 md:p-10">
+                <div class="flex items-center mb-8">
+                    <div class="w-14 h-14 bg-gradient-to-br from-pink-400 to-rose-400 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
+                        <span class="text-3xl">🌸</span>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">Fertility & Ovulation Tracker</h2>
+                        <p class="text-gray-600 text-sm mt-1">Track your cycle and find your most fertile days</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-6 mb-8">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">First Day of Last Period</label>
+                        <input type="date" id="lastPeriod" 
+                            class="w-full px-4 py-4 bg-pink-50 border-2 border-pink-200 rounded-xl focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all text-gray-700 font-medium">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">Average Cycle Length (days)</label>
+                        <div class="relative">
+                            <input type="number" id="cycleLength" value="28" min="22" max="45"
+                                class="w-full px-4 py-4 bg-pink-50 border-2 border-pink-200 rounded-xl focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all text-gray-700 font-medium">
+                            <span class="absolute right-4 top-4 text-gray-400 text-sm">22-45 days</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="calculateFertility()" 
+                    class="w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold py-5 rounded-2xl shadow-xl hover:shadow-2xl hover:from-pink-600 hover:to-rose-600 transform hover:-translate-y-1 transition-all duration-200 text-lg">
+                    ✨ Calculate My Cycle
+                </button>
+
+                <div id="fertilityResult" class="mt-8 space-y-4 hidden">
+                    <div class="bg-gradient-to-br from-red-50 to-pink-50 border-l-4 border-red-400 rounded-xl p-5">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <div class="ml-4 flex-1">
+                                <h3 class="text-sm font-bold text-gray-700 mb-1">Next Period Expected</h3>
+                                <p id="nextPeriod" class="text-lg font-semibold text-gray-900"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-emerald-50 to-green-50 border-l-4 border-emerald-400 rounded-xl p-5">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div class="ml-4 flex-1">
+                                <h3 class="text-sm font-bold text-gray-700 mb-1">⭐ Best Conception Day (Peak Ovulation)</h3>
+                                <p id="ovulationDay" class="text-lg font-semibold text-gray-900"></p>
+                                <p class="text-xs text-gray-600 mt-1">Highest conception probability - optimal timing!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-amber-50 to-yellow-50 border-l-4 border-amber-400 rounded-xl p-5">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                </svg>
+                            </div>
+                            <div class="ml-4 flex-1">
+                                <h3 class="text-sm font-bold text-gray-700 mb-1">Fertile Window (High Conception Days)</h3>
+                                <p id="fertileWindow" class="text-lg font-semibold text-gray-900"></p>
+                                <p class="text-xs text-gray-600 mt-1">Increased chances of getting pregnant</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-blue-50 to-cyan-50 border-l-4 border-blue-400 rounded-xl p-5">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                </svg>
+                            </div>
+                            <div class="ml-4 flex-1">
+                                <h3 class="text-sm font-bold text-gray-700 mb-1">Relative Safe Period</h3>
+                                <p id="safePeriod" class="text-lg font-semibold text-gray-900"></p>
+                                <p class="text-xs text-gray-600 mt-1">⚠️ Not a reliable contraception method</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DUE DATE CALCULATOR TAB -->
+            <div id="content-pregnancy" class="tab-content p-8 md:p-10 hidden">
+                <div class="flex items-center mb-8">
+                    <div class="w-14 h-14 bg-gradient-to-br from-purple-400 to-pink-400 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
+                        <span class="text-3xl">🤰</span>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">Pregnancy Due Date Calculator</h2>
+                        <p class="text-gray-600 text-sm mt-1">Calculate your estimated due date and track pregnancy</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-6 mb-8">
+                    <div class="bg-pink-50 p-4 rounded-xl">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Choose Calculation Method:</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="dueMethod" value="lmp" checked class="mr-2">
+                                <span class="text-sm">Last Period Date</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="dueMethod" value="conception" class="mr-2">
+                                <span class="text-sm">Conception Date</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="lmpInput">
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">First Day of Last Period (LMP)</label>
+                        <input type="date" id="lmpDate" 
+                            class="w-full px-4 py-4 bg-pink-50 border-2 border-pink-200 rounded-xl focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all text-gray-700 font-medium">
+                    </div>
+
+                    <div id="conceptionInput" class="hidden">
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">Conception Date (or suspected date)</label>
+                        <input type="date" id="conceptionDate" 
+                            class="w-full px-4 py-4 bg-pink-50 border-2 border-pink-200 rounded-xl focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all text-gray-700 font-medium">
+                    </div>
+                </div>
+
+                <button onclick="calculateDueDate()" 
+                    class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-5 rounded-2xl shadow-xl hover:shadow-2xl hover:from-purple-600 hover:to-pink-600 transform hover:-translate-y-1 transition-all duration-200 text-lg">
+                    ✨ Calculate Due Date
+                </button>
+
+                <div id="dueDateResult" class="mt-8 space-y-4 hidden">
+                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 border-l-4 border-purple-400 rounded-xl p-5">
+                        <h3 class="text-sm font-bold text-gray-700 mb-2">🎉 Estimated Due Date (EDD)</h3>
+                        <p id="dueDate" class="text-2xl font-bold text-purple-600"></p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-blue-50 to-cyan-50 border-l-4 border-blue-400 rounded-xl p-5">
+                        <h3 class="text-sm font-bold text-gray-700 mb-2">📅 Current Pregnancy Status</h3>
+                        <p id="currentWeek" class="text-lg font-semibold text-gray-900"></p>
+                        <p id="daysPregnant" class="text-sm text-gray-600 mt-1"></p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-green-50 to-emerald-50 border-l-4 border-green-400 rounded-xl p-5">
+                        <h3 class="text-sm font-bold text-gray-700 mb-2">👶 Trimester Information</h3>
+                        <p id="trimester" class="text-lg font-semibold text-gray-900"></p>
+                        <p class="text-xs text-gray-600 mt-2">First trimester: Week 1-12 | Second: Week 13-26 | Third: Week 27-40</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PREGNANCY WEIGHT TAB -->
+            <div id="content-weight" class="tab-content p-8 md:p-10 hidden">
+                <div class="flex items-center mb-8">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
+                        <span class="text-3xl">📊</span>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">Pregnancy Weight Gain Calculator</h2>
+                        <p class="text-gray-600 text-sm mt-1">Track healthy weight gain throughout pregnancy</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-6 mb-8">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">Pre-pregnancy Weight (kg)</label>
+                        <input type="number" id="preWeight" step="0.1" placeholder="e.g., 60"
+                            class="w-full px-4 py-4 bg-pink-50 border-2 border-pink-200 rounded-xl focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all text-gray-700 font-medium">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">Height (cm)</label>
+                        <input type="number" id="height" placeholder="e.g., 165"
+                            class="w-full px-4 py-4 bg-pink-50 border-2 border-pink-200 rounded-xl focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all text-gray-700 font-medium">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">Current Week of Pregnancy (optional)</label>
+                        <input type="number" id="currentWeekInput" min="1" max="40" placeholder="e.g., 20"
+                            class="w-full px-4 py-4 bg-pink-50 border-2 border-pink-200 rounded-xl focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all text-gray-700 font-medium">
+                    </div>
+                </div>
+
+                <button onclick="calculateWeight()" 
+                    class="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold py-5 rounded-2xl shadow-xl hover:shadow-2xl hover:from-blue-600 hover:to-cyan-600 transform hover:-translate-y-1 transition-all duration-200 text-lg">
+                    ✨ Calculate Weight Recommendations
+                </button>
+
+                <div id="weightResult" class="mt-8 space-y-4 hidden">
+                    <div class="bg-gradient-to-br from-indigo-50 to-blue-50 border-l-4 border-indigo-400 rounded-xl p-5">
+                        <h3 class="text-sm font-bold text-gray-700 mb-2">Your Pre-pregnancy BMI</h3>
+                        <p id="bmiValue" class="text-2xl font-bold text-indigo-600"></p>
+                        <p id="bmiCategory" class="text-sm text-gray-600 mt-1"></p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-green-50 to-emerald-50 border-l-4 border-green-400 rounded-xl p-5">
+                        <h3 class="text-sm font-bold text-gray-700 mb-2">📊 Recommended Total Weight Gain</h3>
+                        <p id="weightRange" class="text-lg font-semibold text-gray-900"></p>
+                        <p class="text-xs text-gray-600 mt-2">Based on IOM (Institute of Medicine) guidelines</p>
+                    </div>
+
+                    <div id="currentWeekWeight" class="bg-gradient-to-br from-purple-50 to-pink-50 border-l-4 border-purple-400 rounded-xl p-5 hidden">
+                        <h3 class="text-sm font-bold text-gray-700 mb-2">Expected Weight Gain by Current Week</h3>
+                        <p id="weeklyGain" class="text-lg font-semibold text-gray-900"></p>
+                    </div>
+
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                        <h4 class="text-sm font-bold text-gray-700 mb-2">💡 Weight Gain Timeline:</h4>
+                        <ul class="text-xs text-gray-600 space-y-1">
+                            <li>• First Trimester (0-12 weeks): 1-2 kg total</li>
+                            <li>• Second & Third Trimester: Gradual weekly gain based on BMI</li>
+                            <li>• Regular monitoring with your healthcare provider is recommended</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- POSTPARTUM CARE TAB -->
+            <div id="content-postpartum" class="tab-content p-8 md:p-10 hidden">
+                <div class="flex items-center mb-8">
+                    <div class="w-14 h-14 bg-gradient-to-br from-green-400 to-emerald-400 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
+                        <span class="text-3xl">💪</span>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">Postpartum Recovery Tracker</h2>
+                        <p class="text-gray-600 text-sm mt-1">Monitor your recovery journey after delivery</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-6 mb-8">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">Delivery Date</label>
+                        <input type="date" id="deliveryDate" 
+                            class="w-full px-4 py-4 bg-pink-50 border-2 border-pink-200 rounded-xl focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-100 transition-all text-gray-700 font-medium">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">Are you breastfeeding?</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="breastfeeding" value="yes" checked class="mr-2">
+                                <span class="text-sm">Yes, exclusively</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="breastfeeding" value="partial" class="mr-2">
+                                <span class="text-sm">Partially</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="breastfeeding" value="no" class="mr-2">
+                                <span class="text-sm">No</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="calculatePostpartum()" 
+                    class="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold py-5 rounded-2xl shadow-xl hover:shadow-2xl hover:from-green-600 hover:to-emerald-600 transform hover:-translate-y-1 transition-all duration-200 text-lg">
+                    ✨ Calculate Recovery Timeline
+                </button>
+
+                <div id="postpartumResult" class="mt-8 space-y-4 hidden">
+                    <div class="bg-gradient-to-br from-pink-50 to-rose-50 border-l-4 border-pink-400 rounded-xl p-5">
+                        <h3 class="text-sm font-bold text-gray-700 mb-2">🕐 Time Since Delivery</h3>
+                        <p id="timeSince" class="text-lg font-semibold text-gray-900"></p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 border-l-4 border-purple-400 rounded-xl p-5">
+                        <h3 class="text-sm font-bold text-gray-700 mb-2">🩸 Expected Period Return</h3>
+                        <p id="periodReturn" class="text-lg font-semibold text-gray-900"></p>
+                        <p class="text-xs text-gray-600 mt-2">Based on breastfeeding status. Individual variation is normal.</p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-blue-50 to-cyan-50 border-l-4 border-blue-400 rounded-xl p-5">
+                        <h3 class="text-sm font-bold text-gray-700 mb-3">💪 Pelvic Floor Exercise Guide (Kegel)</h3>
+                        <div class="space-y-3 text-sm text-gray-700">
+                            <div class="flex items-start">
+                                <span class="font-semibold mr-2">1.</span>
+                                <p>Contract pelvic muscles as if stopping urine flow - hold 5 seconds</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="font-semibold mr-2">2.</span>
+                                <p>Relax for 5 seconds, then repeat</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="font-semibold mr-2">3.</span>
+                                <p>Do 10-15 repetitions, 3 times daily</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="font-semibold mr-2">4.</span>
+                                <p>Can start 24 hours after vaginal delivery (consult doctor if C-section)</p>
+                            </div>
+                        </div>
+                        <button onclick="startKegelTimer()" class="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition">
+                            Start 5-Minute Kegel Timer ⏱️
+                        </button>
+                    </div>
+
+                    <div class="bg-green-50 border border-green-200 rounded-xl p-4">
+                        <h4 class="text-sm font-bold text-gray-700 mb-2">🌟 Postpartum Recovery Tips:</h4>
+                        <ul class="text-xs text-gray-600 space-y-1">
+                            <li>• Rest as much as possible - sleep when baby sleeps</li>
+                            <li>• Stay hydrated, especially if breastfeeding</li>
+                            <li>• Gentle walking after 1-2 weeks (with doctor's approval)</li>
+                            <li>• 6-week checkup is essential for full recovery assessment</li>
+                            <li>• Don't hesitate to ask for help - recovery takes time!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO Content Section -->
+        <section class="mt-12 bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl p-8 md:p-10 border border-pink-100">
+            <div class="flex items-center mb-6">
+                <div class="w-12 h-12 bg-gradient-to-br from-pink-400 to-purple-400 rounded-xl flex items-center justify-center mr-3 shadow-lg">
+                    <span class="text-2xl">📚</span>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800">Understanding Your Fertility & Pregnancy Journey</h2>
+            </div>
+            <hr class="border-0 border-t border-gray-200 mb-8">
+            <p class="text-gray-600 mb-6 leading-relaxed">Using a digital tool like this tracker can help you demystify your body's natural rhythms. Whether you are trying to conceive (TTC), tracking your cycle for health awareness, or calculating your pregnancy progress, accuracy is key.</p>
+            
+            <h3 class="text-xl font-bold text-gray-800 mb-3 mt-6">1. How Does the Ovulation Calculator Work?</h3>
+            <p class="text-gray-600 mb-6 leading-relaxed">Our algorithm uses the <strong>Mifflin-St Jeor</strong> inspired logic for health metrics and the standard <strong>Ogino-Knaus Method</strong> for biological cycles. Most women ovulate 12-16 days before their next period starts. By inputting your last period date, we identify your 'Fertile Window'—the days when your chances of conception are highest.</p>
+            
+            <h3 class="text-xl font-bold text-gray-800 mb-3 mt-6">2. Pregnancy Due Date & Conception Tracking</h3>
+            <p class="text-gray-600 mb-6 leading-relaxed">If you've already conceived, you can calculate your estimated due date (EDD) using <strong>Naegele's Rule</strong>: adding seven days to the first day of your last menstrual period (LMP) and subtracting three months. This helps you track your pregnancy week by week.</p>
+            
+            <h3 class="text-xl font-bold text-gray-800 mb-3 mt-6">3. Cycle Tracking for Natural Contraception</h3>
+            <p class="text-gray-600 mb-6 leading-relaxed">While no calculator should replace professional medical advice or primary birth control, understanding your cycle length helps identify your "safe days." However, remember that sperm can live inside the female body for up to 5 days, so always use protection during your fertile window if you are not planning to conceive.</p>
+            
+            <h3 class="text-xl font-bold text-gray-800 mb-3 mt-6">Common FAQs:</h3>
+            <ul class="space-y-3 text-gray-600 ml-6">
+                <li class="list-disc"><strong>What is a normal cycle length?</strong> A typical cycle is between 21 and 35 days.</li>
+                <li class="list-disc"><strong>Can I get pregnant on my period?</strong> It is unlikely but possible, especially if you have a short menstrual cycle.</li>
+                <li class="list-disc"><strong>How accurate are online fertility tools?</strong> They are great for estimation, but tracking basal body temperature (BBT) and cervical mucus provides higher accuracy.</li>
+            </ul>
+        </section>
+    </div>
+
+    <script>
+        // Tab switching
+        function showTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('bg-gradient-to-r', 'from-pink-400', 'to-rose-400', 'text-white', 'shadow-lg', 'scale-105');
+                el.classList.add('text-gray-600', 'hover:bg-pink-50');
+            });
+            
+            document.getElementById('content-' + tab).classList.remove('hidden');
+            const activeBtn = document.getElementById('tab-' + tab);
+            activeBtn.classList.add('bg-gradient-to-r', 'from-pink-400', 'to-rose-400', 'text-white', 'shadow-lg', 'scale-105');
+            activeBtn.classList.remove('text-gray-600', 'hover:bg-pink-50');
+        }
+
+        // Method switcher for due date
+        document.querySelectorAll('input[name="dueMethod"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'lmp') {
+                    document.getElementById('lmpInput').classList.remove('hidden');
+                    document.getElementById('conceptionInput').classList.add('hidden');
+                } else {
+                    document.getElementById('lmpInput').classList.add('hidden');
+                    document.getElementById('conceptionInput').classList.remove('hidden');
+                }
+            });
+        });
+
+        // Fertility Calculator
+        function calculateFertility() {
+            const lastDateInput = document.getElementById('lastPeriod').value;
+            const cycleLength = parseInt(document.getElementById('cycleLength').value);
+
+            if (!lastDateInput) {
+                alert("Please select the first day of your last period");
+                return;
+            }
+
+            const lastDate = new Date(lastDateInput);
+            const nextPeriodDate = new Date(lastDate);
+            nextPeriodDate.setDate(lastDate.getDate() + cycleLength);
+            
+            const ovulationDate = new Date(nextPeriodDate);
+            ovulationDate.setDate(nextPeriodDate.getDate() - 14);
+            
+            const fertileStart = new Date(ovulationDate);
+            fertileStart.setDate(ovulationDate.getDate() - 5);
+            const fertileEnd = new Date(ovulationDate);
+            fertileEnd.setDate(ovulationDate.getDate() + 1);
+
+            const safeStart1 = new Date(lastDate);
+            safeStart1.setDate(lastDate.getDate() + 1);
+            const safeEnd1 = new Date(fertileStart);
+            safeEnd1.setDate(fertileStart.getDate() - 1);
+
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            
+            document.getElementById('nextPeriod').innerText = nextPeriodDate.toLocaleDateString('en-US', options);
+            document.getElementById('ovulationDay').innerText = ovulationDate.toLocaleDateString('en-US', options);
+            document.getElementById('fertileWindow').innerText = 
+                fertileStart.toLocaleDateString('en-US', options) + " to " + fertileEnd.toLocaleDateString('en-US', options);
+            document.getElementById('safePeriod').innerText = 
+                safeStart1.toLocaleDateString('en-US', options) + " to " + safeEnd1.toLocaleDateString('en-US', options);
+
+            document.getElementById('fertilityResult').classList.remove('hidden');
+        }
+
+        // Due Date Calculator
+        function calculateDueDate() {
+            const method = document.querySelector('input[name="dueMethod"]:checked').value;
+            let lmpDate;
+
+            if (method === 'lmp') {
+                const lmpInput = document.getElementById('lmpDate').value;
+                if (!lmpInput) {
+                    alert("Please enter your last period date");
+                    return;
+                }
+                lmpDate = new Date(lmpInput);
+            } else {
+                const conceptionInput = document.getElementById('conceptionDate').value;
+                if (!conceptionInput) {
+                    alert("Please enter your conception date");
+                    return;
+                }
+                const conceptionDate = new Date(conceptionInput);
+                lmpDate = new Date(conceptionDate);
+                lmpDate.setDate(conceptionDate.getDate() - 14);
+            }
+
+            // Naegele's Rule
+            const dueDate = new Date(lmpDate);
+            dueDate.setDate(lmpDate.getDate() + 280);
+
+            const today = new Date();
+            const daysDiff = Math.floor((today - lmpDate) / (1000 * 60 * 60 * 24));
+            const weeks = Math.floor(daysDiff / 7);
+            const days = daysDiff % 7;
+
+            let trimester = "First Trimester";
+            if (weeks >= 27) trimester = "Third Trimester";
+            else if (weeks >= 13) trimester = "Second Trimester";
+
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('dueDate').innerText = dueDate.toLocaleDateString('en-US', options);
+            document.getElementById('currentWeek').innerText = `Week ${weeks}, Day ${days}`;
+            document.getElementById('daysPregnant').innerText = `${daysDiff} days pregnant`;
+            document.getElementById('trimester').innerText = trimester;
+
+            document.getElementById('dueDateResult').classList.remove('hidden');
+        }
+
+        // Weight Calculator
+        function calculateWeight() {
+            const weight = parseFloat(document.getElementById('preWeight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const currentWeek = parseInt(document.getElementById('currentWeekInput').value) || 0;
+
+            if (!weight || !height) {
+                alert("Please enter your weight and height");
+                return;
+            }
+
+            const heightM = height / 100;
+            const bmi = weight / (heightM * heightM);
+            
+            let category = "";
+            let minGain = 0, maxGain = 0;
+
+            if (bmi < 18.5) {
+                category = "Underweight";
+                minGain = 12.5;
+                maxGain = 18;
+            } else if (bmi < 25) {
+                category = "Normal weight";
+                minGain = 11.5;
+                maxGain = 16;
+            } else if (bmi < 30) {
+                category = "Overweight";
+                minGain = 7;
+                maxGain = 11.5;
+            } else {
+                category = "Obese";
+                minGain = 5;
+                maxGain = 9;
+            }
+
+            document.getElementById('bmiValue').innerText = bmi.toFixed(1);
+            document.getElementById('bmiCategory').innerText = category;
+            document.getElementById('weightRange').innerText = `${minGain} - ${maxGain} kg throughout pregnancy`;
+
+            if (currentWeek > 0) {
+                let expectedGain = 0;
+                if (currentWeek <= 12) {
+                    expectedGain = 1.5;
+                } else {
+                    const weeklyRate = (minGain + maxGain) / 2 / 28;
+                    expectedGain = 1.5 + (currentWeek - 12) * weeklyRate;
+                }
+                document.getElementById('weeklyGain').innerText = `Approximately ${expectedGain.toFixed(1)} kg by week ${currentWeek}`;
+                document.getElementById('currentWeekWeight').classList.remove('hidden');
+            }
+
+            document.getElementById('weightResult').classList.remove('hidden');
+        }
+
+        // Postpartum Calculator
+        function calculatePostpartum() {
+            const deliveryInput = document.getElementById('deliveryDate').value;
+            if (!deliveryInput) {
+                alert("Please enter your delivery date");
+                return;
+            }
+
+            const deliveryDate = new Date(deliveryInput);
+            const today = new Date();
+            const daysSince = Math.floor((today - deliveryDate) / (1000 * 60 * 60 * 24));
+            const weeks = Math.floor(daysSince / 7);
+
+            const breastfeeding = document.querySelector('input[name="breastfeeding"]:checked').value;
+            let periodReturn = "";
+
+            if (breastfeeding === 'yes') {
+                periodReturn = "6-12 months (or when reducing breastfeeding)";
+            } else if (breastfeeding === 'partial') {
+                periodReturn = "3-8 months";
+            } else {
+                periodReturn = "6-8 weeks";
+            }
+
+            document.getElementById('timeSince').innerText = `${weeks} weeks and ${daysSince % 7} days postpartum`;
+            document.getElementById('periodReturn').innerText = periodReturn;
+            document.getElementById('postpartumResult').classList.remove('hidden');
+        }
+
+        // Kegel Timer
+        let kegelInterval;
+        function startKegelTimer() {
+            let timeLeft = 300; // 5 minutes
+            const button = event.target;
+            button.disabled = true;
+            button.classList.add('opacity-50');
+
+            kegelInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                button.innerText = `⏱️ ${minutes}:${seconds.toString().padStart(2, '0')} remaining`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(kegelInterval);
+                    button.innerText = "✅ Session Complete! Start Again";
+                    button.disabled = false;
+                    button.classList.remove('opacity-50');
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

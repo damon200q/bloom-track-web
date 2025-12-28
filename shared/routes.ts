@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { insertCycleSchema, cycles } from './schema';
+import { insertCycleSchema, cycles, insertPregnancySchema, pregnancies, insertWeightSchema, weightEntries, insertPostpartumSchema, postpartumChecks } from './schema';
 
 export const errorSchemas = {
   validation: z.object({
@@ -34,6 +34,60 @@ export const api = {
       responses: {
         204: z.void(),
         404: errorSchemas.notFound,
+      },
+    },
+  },
+  pregnancy: {
+    list: {
+      method: 'GET' as const,
+      path: '/api/pregnancy',
+      responses: {
+        200: z.array(z.custom<typeof pregnancies.$inferSelect>()),
+      },
+    },
+    create: {
+      method: 'POST' as const,
+      path: '/api/pregnancy',
+      input: insertPregnancySchema,
+      responses: {
+        201: z.custom<typeof pregnancies.$inferSelect>(),
+        400: errorSchemas.validation,
+      },
+    },
+  },
+  weight: {
+    list: {
+      method: 'GET' as const,
+      path: '/api/weight',
+      responses: {
+        200: z.array(z.custom<typeof weightEntries.$inferSelect>()),
+      },
+    },
+    create: {
+      method: 'POST' as const,
+      path: '/api/weight',
+      input: insertWeightSchema,
+      responses: {
+        201: z.custom<typeof weightEntries.$inferSelect>(),
+        400: errorSchemas.validation,
+      },
+    },
+  },
+  postpartum: {
+    list: {
+      method: 'GET' as const,
+      path: '/api/postpartum',
+      responses: {
+        200: z.array(z.custom<typeof postpartumChecks.$inferSelect>()),
+      },
+    },
+    create: {
+      method: 'POST' as const,
+      path: '/api/postpartum',
+      input: insertPostpartumSchema,
+      responses: {
+        201: z.custom<typeof postpartumChecks.$inferSelect>(),
+        400: errorSchemas.validation,
       },
     },
   },
