@@ -479,6 +479,120 @@ export default function Home() {
           </AnimatePresence>
         </Tabs>
 
+        {/* Knowledge Hub Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-16 space-y-12 pb-20"
+        >
+          <div className="text-center space-y-4">
+            <h2 className="text-4xl font-extrabold text-gray-900 tracking-tight font-display">
+              Fertility <span className="text-[#ff6b9d]">Knowledge Hub</span>
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              A comprehensive medical guide to understanding your cycle, optimizing fertility, and the science of conception.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card className="bg-white/80 backdrop-blur-sm border-pink-100 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300">
+              <CardContent className="p-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-3 bg-pink-100 rounded-2xl">
+                    <Activity className="w-6 h-6 text-[#ff6b9d]" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">Understanding Your Cycle</h3>
+                </div>
+                <div className="prose prose-pink max-w-none text-gray-600 space-y-4 leading-relaxed">
+                  <p>
+                    The menstrual cycle is a complex biological process orchestrated by a delicate balance of hormones, primarily estrogen and progesterone. A typical cycle lasts between 21 and 35 days, though individual variation is significant and medically normal.
+                  </p>
+                  <p>
+                    <strong>The Follicular Phase:</strong> This phase begins on the first day of menstruation and lasts until ovulation. During this time, follicle-stimulating hormone (FSH) stimulates the ovaries to produce follicles, each containing an egg. As these follicles grow, they secrete estrogen, which thickens the uterine lining (endometrium) in preparation for potential pregnancy.
+                  </p>
+                  <p>
+                    <strong>The Luteal Phase:</strong> Post-ovulation, the ruptured follicle transforms into the corpus luteum, producing progesterone. This hormone stabilizes the endometrial lining. If conception does not occur, hormone levels drop, leading to the shedding of the uterine lining—menstruation.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/80 backdrop-blur-sm border-purple-100 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300">
+              <CardContent className="p-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-3 bg-purple-100 rounded-2xl">
+                    <Sparkles className="w-6 h-6 text-purple-500" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">Identifying Ovulation</h3>
+                </div>
+                <div className="prose prose-purple max-w-none text-gray-600 space-y-4 leading-relaxed">
+                  <p>
+                    Ovulation is the release of a mature egg from the ovary, typically occurring 12 to 16 days before the next period begins. Identifying this window is critical for both conception planning and natural family planning.
+                  </p>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li><strong>Cervical Mucus Changes:</strong> As estrogen levels rise, cervical fluid becomes clear, slippery, and stretchy (similar to raw egg whites). This "fertile quality" mucus protects sperm and facilitates its journey through the cervix.</li>
+                    <li><strong>Basal Body Temperature (BBT):</strong> A slight rise in resting body temperature (approx. 0.5°F - 1°F) occurs after ovulation due to increased progesterone. Tracking this daily can help identify the retrospective date of ovulation.</li>
+                    <li><strong>Luteinizing Hormone (LH) Surge:</strong> A dramatic spike in LH triggers the release of the egg. This surge can be detected using urinary ovulation predictor kits (OPKs) 24-48 hours before ovulation occurs.</li>
+                  </ul>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <Card className="bg-gradient-to-br from-pink-50 to-rose-50 border-rose-100 rounded-3xl shadow-xl overflow-hidden">
+            <CardContent className="p-8 md:p-12">
+              <div className="flex flex-col md:flex-row gap-12 items-start">
+                <div className="flex-1 space-y-6">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full text-rose-500 text-sm font-bold shadow-sm border border-rose-100">
+                    <HeartPulse className="w-4 h-4" />
+                    Medical Insight
+                  </div>
+                  <h3 className="text-3xl font-bold text-gray-900">The Science of Conception</h3>
+                  <div className="prose prose-rose max-w-none text-gray-600 space-y-4 leading-relaxed">
+                    <p>
+                      Conception requires the perfect synchronization of biological events. Once released, an egg remains viable for only 12 to 24 hours. However, healthy sperm can survive within the female reproductive tract for up to five days under optimal conditions.
+                    </p>
+                    <p>
+                      <strong>The Fertile Window:</strong> This period encompasses the five days leading up to ovulation and the day of ovulation itself. Clinical research indicates that the highest probability of conception occurs on the two days immediately preceding ovulation.
+                    </p>
+                    <p>
+                      <strong>Optimization Strategies:</strong> To enhance fertility, medical professionals recommend maintaining a balanced diet rich in folate, managing stress levels (which can disrupt the hypothalamic-pituitary-ovarian axis), and avoiding tobacco and excessive alcohol. Regular physical activity supports metabolic health, which is intrinsically linked to regular ovulation cycles.
+                    </p>
+                    <p>
+                      <strong>When to Consult a Specialist:</strong> If conception is not achieved after one year of regular unprotected intercourse (or six months for individuals over 35), a consultation with a reproductive endocrinologist is advised to investigate potential underlying factors such as tubal patency, ovulatory dysfunction, or male factor fertility.
+                    </p>
+                  </div>
+                </div>
+                <div className="w-full md:w-80 bg-white/50 backdrop-blur-sm rounded-2xl p-6 border border-white/40 space-y-4">
+                  <h4 className="font-bold text-gray-900 flex items-center gap-2">
+                    <Info className="w-4 h-4 text-[#ff6b9d]" />
+                    Quick Tips for Conceiving
+                  </h4>
+                  <ul className="space-y-3 text-sm text-gray-600">
+                    <li className="flex gap-2">
+                      <span className="text-[#ff6b9d] font-bold">•</span>
+                      Start taking a prenatal vitamin with at least 400mcg of folic acid.
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-[#ff6b9d] font-bold">•</span>
+                      Maintain a BMI within the healthy range (18.5 - 24.9).
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-[#ff6b9d] font-bold">•</span>
+                      Avoid lubricants that are not "sperm-friendly."
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-[#ff6b9d] font-bold">•</span>
+                      Prioritize sleep hygiene to support hormonal regulation.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
         {/* Info Footer */}
         <div className="mt-12 text-center text-gray-500 text-sm bg-white/50 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
           <div className="flex items-center justify-center gap-2 mb-2 font-semibold">
