@@ -3,11 +3,20 @@ import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { z } from "zod";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  // Serve sitemap.xml from root
+  app.get("/sitemap.xml", (_req, res) => {
+    res.sendFile(path.resolve(__dirname, "../sitemap.xml"));
+  });
 
   app.get(api.cycles.list.path, async (_req, res) => {
     const cycles = await storage.getCycles();
