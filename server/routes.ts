@@ -13,11 +13,6 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  // Serve sitemap.xml from root
-  app.get("/sitemap.xml", (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../sitemap.xml"));
-  });
-
   app.get(api.cycles.list.path, async (_req, res) => {
     const cycles = await storage.getCycles();
     res.json(cycles);
