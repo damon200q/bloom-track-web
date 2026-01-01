@@ -1,1 +1,1 @@
-{"scripts": {"build": "vite build"}}
+{"scripts":{"build":"vite build"},"devDependencies":{"@vitejs/plugin-react":"^5.1.2","vite":"^7.3.0"}}
