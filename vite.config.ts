@@ -5,15 +5,11 @@ import path from "path";
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./client/src"),
-      "@shared": path.resolve(__dirname, "./shared"),
-      "@assets": path.resolve(__dirname, "./attached_assets"),
-    },
+    // ... alias 不变
   },
-  root: "./client",
+  root: "./client", // 保持这行不变，说明你的源码在 client 文件夹
   build: {
-    outDir: path.resolve(__dirname, "./dist/public"),
+    outDir: "../dist", // 【关键修改】这里改成 "../dist"
     emptyOutDir: true,
   },
 });
